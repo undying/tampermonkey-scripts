@@ -11,7 +11,18 @@
 
 (function() {
     'use strict';
-    window.addEventListener('load', function() {
-        document.querySelectorAll(".rup__animation").forEach(el => el.remove());
-}, false);
+    document.querySelectorAll(".rup__animation").forEach(el => el.remove());
+
+    const target = document.querySelector('.centerblock');
+    const config = { attributes: true, childList: true, subtree: true };
+
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                console.log('A child node has been added or removed.');
+                document.querySelectorAll(".rup__animation").forEach(el => el.remove());
+            }
+        });
+    });
+    observer.observe(target, config);
 })();
